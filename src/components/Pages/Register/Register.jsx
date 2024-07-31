@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
+import { sendEmailVerification } from "firebase/auth";
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +28,14 @@ const Register = () => {
       .then((result) => {
         console.log(result.user);
         toast.success("User created successfully!");
+        sendEmailVerification(result.user)
+        .then(()=>{
+          toast('Check your email and verify your account')
+        })
+        .catch(err =>{
+          console.log(err.message)
+          toast.error(err.message)
+        })
       })
       .catch((err) => {
         console.error(err);
@@ -40,6 +49,7 @@ const Register = () => {
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">
             Register to our platform
           </h5>
+    
           <div>
             <label
               for="email"

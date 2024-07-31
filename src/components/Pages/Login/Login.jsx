@@ -17,7 +17,11 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then(result => {
             console.log(result.user)
-            toast.success("Login successfully")
+            if(result.user.emailVerified){
+              toast.success("Login successfully")
+            }else{
+              toast.error("login field plesae check your email and verfied your account")
+            }
         })
         .catch(err => {
             console.log(err.message)
